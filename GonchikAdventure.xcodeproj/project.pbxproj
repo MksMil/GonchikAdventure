@@ -1,0 +1,567 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		2909E1C22D3F8DCA0002A02A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2909E1A92D3F8DC60002A02A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2909E1B02D3F8DC60002A02A;
+			remoteInfo = GonchikAdventure;
+		};
+		2909E1CC2D3F8DCA0002A02A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2909E1A92D3F8DC60002A02A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2909E1B02D3F8DC60002A02A;
+			remoteInfo = GonchikAdventure;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		2909E1B12D3F8DC60002A02A /* GonchikAdventure.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GonchikAdventure.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2909E1C12D3F8DCA0002A02A /* GonchikAdventureTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GonchikAdventureTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2909E1CB2D3F8DCA0002A02A /* GonchikAdventureUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GonchikAdventureUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		2909E1B32D3F8DC60002A02A /* GonchikAdventure */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GonchikAdventure;
+			sourceTree = "<group>";
+		};
+		2909E1C42D3F8DCA0002A02A /* GonchikAdventureTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GonchikAdventureTests;
+			sourceTree = "<group>";
+		};
+		2909E1CE2D3F8DCA0002A02A /* GonchikAdventureUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = GonchikAdventureUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2909E1AE2D3F8DC60002A02A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2909E1BE2D3F8DCA0002A02A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2909E1C82D3F8DCA0002A02A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2909E1A82D3F8DC60002A02A = {
+			isa = PBXGroup;
+			children = (
+				2909E1B32D3F8DC60002A02A /* GonchikAdventure */,
+				2909E1C42D3F8DCA0002A02A /* GonchikAdventureTests */,
+				2909E1CE2D3F8DCA0002A02A /* GonchikAdventureUITests */,
+				2909E1B22D3F8DC60002A02A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2909E1B22D3F8DC60002A02A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2909E1B12D3F8DC60002A02A /* GonchikAdventure.app */,
+				2909E1C12D3F8DCA0002A02A /* GonchikAdventureTests.xctest */,
+				2909E1CB2D3F8DCA0002A02A /* GonchikAdventureUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2909E1B02D3F8DC60002A02A /* GonchikAdventure */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2909E1D52D3F8DCA0002A02A /* Build configuration list for PBXNativeTarget "GonchikAdventure" */;
+			buildPhases = (
+				2909E1AD2D3F8DC60002A02A /* Sources */,
+				2909E1AE2D3F8DC60002A02A /* Frameworks */,
+				2909E1AF2D3F8DC60002A02A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				2909E1B32D3F8DC60002A02A /* GonchikAdventure */,
+			);
+			name = GonchikAdventure;
+			packageProductDependencies = (
+			);
+			productName = GonchikAdventure;
+			productReference = 2909E1B12D3F8DC60002A02A /* GonchikAdventure.app */;
+			productType = "com.apple.product-type.application";
+		};
+		2909E1C02D3F8DCA0002A02A /* GonchikAdventureTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2909E1D82D3F8DCA0002A02A /* Build configuration list for PBXNativeTarget "GonchikAdventureTests" */;
+			buildPhases = (
+				2909E1BD2D3F8DCA0002A02A /* Sources */,
+				2909E1BE2D3F8DCA0002A02A /* Frameworks */,
+				2909E1BF2D3F8DCA0002A02A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2909E1C32D3F8DCA0002A02A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2909E1C42D3F8DCA0002A02A /* GonchikAdventureTests */,
+			);
+			name = GonchikAdventureTests;
+			packageProductDependencies = (
+			);
+			productName = GonchikAdventureTests;
+			productReference = 2909E1C12D3F8DCA0002A02A /* GonchikAdventureTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		2909E1CA2D3F8DCA0002A02A /* GonchikAdventureUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2909E1DB2D3F8DCA0002A02A /* Build configuration list for PBXNativeTarget "GonchikAdventureUITests" */;
+			buildPhases = (
+				2909E1C72D3F8DCA0002A02A /* Sources */,
+				2909E1C82D3F8DCA0002A02A /* Frameworks */,
+				2909E1C92D3F8DCA0002A02A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2909E1CD2D3F8DCA0002A02A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				2909E1CE2D3F8DCA0002A02A /* GonchikAdventureUITests */,
+			);
+			name = GonchikAdventureUITests;
+			packageProductDependencies = (
+			);
+			productName = GonchikAdventureUITests;
+			productReference = 2909E1CB2D3F8DCA0002A02A /* GonchikAdventureUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2909E1A92D3F8DC60002A02A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1620;
+				LastUpgradeCheck = 1620;
+				TargetAttributes = {
+					2909E1B02D3F8DC60002A02A = {
+						CreatedOnToolsVersion = 16.2;
+					};
+					2909E1C02D3F8DCA0002A02A = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 2909E1B02D3F8DC60002A02A;
+					};
+					2909E1CA2D3F8DCA0002A02A = {
+						CreatedOnToolsVersion = 16.2;
+						TestTargetID = 2909E1B02D3F8DC60002A02A;
+					};
+				};
+			};
+			buildConfigurationList = 2909E1AC2D3F8DC60002A02A /* Build configuration list for PBXProject "GonchikAdventure" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 2909E1A82D3F8DC60002A02A;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 2909E1B22D3F8DC60002A02A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2909E1B02D3F8DC60002A02A /* GonchikAdventure */,
+				2909E1C02D3F8DCA0002A02A /* GonchikAdventureTests */,
+				2909E1CA2D3F8DCA0002A02A /* GonchikAdventureUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		2909E1AF2D3F8DC60002A02A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2909E1BF2D3F8DCA0002A02A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2909E1C92D3F8DCA0002A02A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2909E1AD2D3F8DC60002A02A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2909E1BD2D3F8DCA0002A02A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2909E1C72D3F8DCA0002A02A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2909E1C32D3F8DCA0002A02A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2909E1B02D3F8DC60002A02A /* GonchikAdventure */;
+			targetProxy = 2909E1C22D3F8DCA0002A02A /* PBXContainerItemProxy */;
+		};
+		2909E1CD2D3F8DCA0002A02A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2909E1B02D3F8DC60002A02A /* GonchikAdventure */;
+			targetProxy = 2909E1CC2D3F8DCA0002A02A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2909E1D32D3F8DCA0002A02A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		2909E1D42D3F8DCA0002A02A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2909E1D62D3F8DCA0002A02A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"GonchikAdventure/Preview Content\"";
+				DEVELOPMENT_TEAM = 32A46KSFC5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MM.GonchikAdventure;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2909E1D72D3F8DCA0002A02A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"GonchikAdventure/Preview Content\"";
+				DEVELOPMENT_TEAM = 32A46KSFC5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MM.GonchikAdventure;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		2909E1D92D3F8DCA0002A02A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 32A46KSFC5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MM.GonchikAdventureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GonchikAdventure.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GonchikAdventure";
+			};
+			name = Debug;
+		};
+		2909E1DA2D3F8DCA0002A02A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 32A46KSFC5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MM.GonchikAdventureTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/GonchikAdventure.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/GonchikAdventure";
+			};
+			name = Release;
+		};
+		2909E1DC2D3F8DCA0002A02A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 32A46KSFC5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MM.GonchikAdventureUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GonchikAdventure;
+			};
+			name = Debug;
+		};
+		2909E1DD2D3F8DCA0002A02A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 32A46KSFC5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.MM.GonchikAdventureUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = GonchikAdventure;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2909E1AC2D3F8DC60002A02A /* Build configuration list for PBXProject "GonchikAdventure" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2909E1D32D3F8DCA0002A02A /* Debug */,
+				2909E1D42D3F8DCA0002A02A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2909E1D52D3F8DCA0002A02A /* Build configuration list for PBXNativeTarget "GonchikAdventure" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2909E1D62D3F8DCA0002A02A /* Debug */,
+				2909E1D72D3F8DCA0002A02A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2909E1D82D3F8DCA0002A02A /* Build configuration list for PBXNativeTarget "GonchikAdventureTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2909E1D92D3F8DCA0002A02A /* Debug */,
+				2909E1DA2D3F8DCA0002A02A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2909E1DB2D3F8DCA0002A02A /* Build configuration list for PBXNativeTarget "GonchikAdventureUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2909E1DC2D3F8DCA0002A02A /* Debug */,
+				2909E1DD2D3F8DCA0002A02A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2909E1A92D3F8DC60002A02A /* Project object */;
+}
