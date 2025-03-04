@@ -1,19 +1,17 @@
 import SwiftUI
 import SpriteKit
 
-class HomeScene: RootScene {
+class RedScene: RootScene {
     
     let cameraNode = SKCameraNode()
     var bgNode: SKNode = SKNode()
     var startButton = SKNode()
     
     override func didMove(to view: SKView) {
-        print("home here")
         size = view.frame.size
         scaleMode = .aspectFill
         
         setupCamera()
-        addBG()
         addStartButton()
         
     }
@@ -25,16 +23,9 @@ class HomeScene: RootScene {
                                       y: size.height / 2)
     }
     
-    func addBG(){
-        bgNode = BackgroundNode(withSize: size)
-        addChild(bgNode)
-    }
-    
     func addStartButton(){
         let texture =  SKTexture(imageNamed: "stattButton")
-        
         startButton = SKSpriteNode(texture: texture, size: CGSize(width: 300, height: 300))
-        
         addChild(startButton)
         startButton.position = CGPoint(x: size.width / 2,
                                        y: size.height / 2)
@@ -50,14 +41,15 @@ class HomeScene: RootScene {
 
         //if sprite touched define shapenode to selected node
         if node == startButton{
-//            print("start touched")
+            print("start touched")
             mainViewDelegate?.printText(text: "Hello!!!")
             mainViewDelegate?.nextScene()
-
         }
     }
-}
-
-#Preview {
-    ContentView()
+    
+    
+    
+    
+    
+    
 }

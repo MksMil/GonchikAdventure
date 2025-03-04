@@ -31,8 +31,7 @@ class BackgroundNode: SKNode{
             let node = bgNodes[i]
             addChild(node)
             node.zPosition = CGFloat(i)
-            print("added \(i)")
-            print(size)
+            
             node.size = CGSize(width: size.width, height: size.height / CGFloat(i + 1))
             node.position = CGPoint(x: size.width / 2,
                                     y: size.height / (2 * CGFloat(i + 1)))
