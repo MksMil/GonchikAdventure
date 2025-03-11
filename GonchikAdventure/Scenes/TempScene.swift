@@ -9,18 +9,17 @@ import SpriteKit
 
 class RootScene: SKScene{
     weak var mainViewDelegate: MainViewDelegateProtocol?
+    
 }
 
 class TempScene: RootScene {
 
-    func printSmth(){
-        mainViewDelegate?.printText(text: "Hello, i'm delegate!")
-    }
     
-    enum SceneState {
-        case idle, touchingNewPoint, touchingSelectedPoint, movedPoint,
-            movingCam
-    }
+    
+//    enum SceneState {
+//        case idle, touchingNewPoint, touchingSelectedPoint, movedPoint,
+//            movingCam
+//    }
 
     enum NodeZone: String {
         case main, rightUp, rightDown, leftUp, leftDown
@@ -42,7 +41,7 @@ class TempScene: RootScene {
     let poleCamSpriteName = "poleCam1"
 
     //point and cam movement control
-    var sceneState: SceneState = .idle
+//    var sceneState: SceneState = .idle
 
     //delegate
     //weak var pointDelegate: BPSKViewDelegate?
@@ -472,87 +471,87 @@ extension TempScene {
 
         let innerLocation = touch.location(in: node)
 
-        if let selectedNode = selectedPointNode, selectedNode.name == node.name
-        {
-            //current selected node
-            deltaXinTouch = innerLocation.x
-            deltaYinTouch = innerLocation.y
-            sceneState = .touchingSelectedPoint
-        } else {
-            //select new node
-            if let name = node.name, name != NodeType.background.rawValue {
-                //            deselect()
-                //            selectNode(node)
-                sceneState = .touchingNewPoint
-                deltaXinTouch = innerLocation.x
-                deltaYinTouch = innerLocation.y
-            } else {
-                //background selected
-                sceneState = .idle
-                lastPanLocation = touch.location(in: view)
-            }
-            //selected point animation start
-        }
+//        if let selectedNode = selectedPointNode, selectedNode.name == node.name
+//        {
+//            //current selected node
+//            deltaXinTouch = innerLocation.x
+//            deltaYinTouch = innerLocation.y
+//            sceneState = .touchingSelectedPoint
+//        } else {
+//            //select new node
+//            if let name = node.name, name != NodeType.background.rawValue {
+//                //            deselect()
+//                //            selectNode(node)
+//                sceneState = .touchingNewPoint
+//                deltaXinTouch = innerLocation.x
+//                deltaYinTouch = innerLocation.y
+//            } else {
+//                //background selected
+//                sceneState = .idle
+//                lastPanLocation = touch.location(in: view)
+//            }
+//            //selected point animation start
+//        }
     }
 
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         guard let touch = touches.first else { return }
-        if sceneState == .touchingNewPoint || sceneState == .movedPoint
-            || sceneState == .touchingSelectedPoint,
-            let selectedPointNode = selectedPointNode as? SKShapeNode
-        {
-            let location = touch.location(in: self)
-            let deltaPoint = CGPoint(
-                x: location.x - deltaXinTouch * selectedPointNode.xScale,
-                y: location.y - deltaYinTouch * selectedPointNode.xScale)
-
-            let optimalLocation = optimalPositionForNode(
-                selectedPointNode,
-                location: deltaPoint)
-
-            self.selectedPointNode?.position = optimalLocation
-            sceneState = .movedPoint
-        } else {
-            sceneState = .movingCam
-            let location = touch.location(in: view)
-            if let lastLocation = lastPanLocation {
-                let newLocation = CGPoint(
-                    x: cameraNode.position.x + (lastLocation.x - location.x)
-                        * cameraNode.xScale,
-                    y: cameraNode.position.y
-                        - ((lastLocation.y - location.y) * cameraNode.yScale))
-                cameraNode.position = optimalCamPosition(
-                    newLocation: newLocation)
-                lastPanLocation = location
-            }
-
-        }
+//        if sceneState == .touchingNewPoint || sceneState == .movedPoint
+//            || sceneState == .touchingSelectedPoint,
+//            let selectedPointNode = selectedPointNode as? SKShapeNode
+//        {
+//            let location = touch.location(in: self)
+//            let deltaPoint = CGPoint(
+//                x: location.x - deltaXinTouch * selectedPointNode.xScale,
+//                y: location.y - deltaYinTouch * selectedPointNode.xScale)
+//
+//            let optimalLocation = optimalPositionForNode(
+//                selectedPointNode,
+//                location: deltaPoint)
+//
+//            self.selectedPointNode?.position = optimalLocation
+//            sceneState = .movedPoint
+//        } else {
+//            sceneState = .movingCam
+//            let location = touch.location(in: view)
+//            if let lastLocation = lastPanLocation {
+//                let newLocation = CGPoint(
+//                    x: cameraNode.position.x + (lastLocation.x - location.x)
+//                        * cameraNode.xScale,
+//                    y: cameraNode.position.y
+//                        - ((lastLocation.y - location.y) * cameraNode.yScale))
+//                cameraNode.position = optimalCamPosition(
+//                    newLocation: newLocation)
+//                lastPanLocation = location
+//            }
+//
+//        }
     }
 
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
-        if sceneState == .movedPoint || sceneState == .touchingNewPoint {
-            //        updateData()
-            //        pointDelegate?.saveAction()
-        } else if sceneState == .touchingSelectedPoint {
-            //        deselect()
-        } else if sceneState == .movingCam {
-            //movingcam
-            if let editedNode {
-                self.selectedPointNode = editedNode
-            }
-        } else {
-            //        deselect()
-        }
-        sceneState = .idle
+//        if sceneState == .movedPoint || sceneState == .touchingNewPoint {
+//            //        updateData()
+//            //        pointDelegate?.saveAction()
+//        } else if sceneState == .touchingSelectedPoint {
+//            //        deselect()
+//        } else if sceneState == .movingCam {
+//            //movingcam
+//            if let editedNode {
+//                self.selectedPointNode = editedNode
+//            }
+//        } else {
+//            //        deselect()
+//        }
+//        sceneState = .idle
     }
 
     override func touchesCancelled(
         _ touches: Set<UITouch>, with event: UIEvent?
     ) {
         super.touchesCancelled(touches, with: event)
-        sceneState = .idle
+//        sceneState = .idle
     }
 
 }

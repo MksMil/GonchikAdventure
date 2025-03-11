@@ -77,5 +77,5 @@ class BackgroundNode: SKNode{
 
 
 #Preview {
-    ContentView()
+    StartView()
 }

@@ -1,25 +1,21 @@
 import SpriteKit
 import SwiftUI
 
-struct ContentView: View {
+struct StartView: View {
     
-    @StateObject var viewModel: SceneRouter = SceneRouter()
+    @StateObject var mainRouter = MainRouter()
     
     var body: some View {
-        
             SpriteView(
-                scene: viewModel.activeScene,
+                scene: mainRouter.activeScene,
                 debugOptions: [.showsFPS, .showsNodeCount]
             )
             .ignoresSafeArea()
-           
-    
-//        .padding(.bottom,20)
     }
 }
 
 #Preview {
-    ContentView()
+    StartView()
 }
 
 
