@@ -37,7 +37,7 @@ class PlayLevelHudNode: SKNode{
         rightButtonNode.setup(withName: "silver-!arrowright",
                               size: CGSize(width: size.width * buttonSize,
                                            height: size.width * buttonSize),
-                              position: CGPoint(x: -size.width * 2 * scaleFactor,
+                              position: CGPoint(x: -size.width * 2.7 * scaleFactor,
                                                 y: -size.height * 3 * scaleFactor))
         rightButtonNode.name = NodeNames.buttonRight.name
         rightButtonNode.changeState()

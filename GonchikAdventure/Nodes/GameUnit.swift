@@ -7,6 +7,8 @@ import SpriteKit
 
 class GameUnit: SKSpriteNode{
     var state: UnitState = .stop
+    var horizontalVelocity: CGVector = CGVectorMake(100, 0)
+    var verticalVelocity: CGVector = CGVectorMake(0, 600)
     
     func setupPhysics(){
         physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 30, height: 30))
@@ -24,26 +26,23 @@ class GameUnit: SKSpriteNode{
         physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Edges //с какой категорией проводится тест на контакт при симуляции физики
         
         physicsBody?.collisionBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Edges // контакт с какой категорией влияет на это тело, по умоланию все категории
-        
-        
     }
     
     func moveRight(){
         state = .moveRight
-//        physicsBody?.friction = 0
-        physicsBody?.applyForce(CGVector(dx: 450, dy: 0.0))
-        
+        physicsBody?.velocity = horizontalVelocity
     }
-    
     
     func moveLeft(){
         state = .moveLeft
-//        physicsBody?.applyForce(CGVector(dx: -450, dy: 0.0))
-        physicsBody?.applyImpulse(CGVector(dx: -10, dy: 0.0))
+        physicsBody?.velocity = horizontalVelocity * (-1.0)
     }
     
     func jump(){
-        physicsBody?.applyImpulse(CGVector(dx: 0.0, dy: 15.0))
+        if state != .jumping{
+            state = .jumping
+            physicsBody?.velocity = verticalVelocity
+        }
     }
     
     func stopMoving(){

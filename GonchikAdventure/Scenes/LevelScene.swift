@@ -205,19 +205,19 @@ extension LevelScene{
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         let node = atPoint(location)
-//        if let name = node.name{
-//            print(name + "ended")
-//        }
+
         if node is BaseButtonNode{
             (node as! BaseButtonNode).changeState()
             if let name = node.name, let nodeName = NodeNames(rawValue: name){
-//                print(nodeName.name + "started")
                 switch nodeName {
                     case .camera:
                         print("")
                     case .bg:
                         print("")
+                //
                     case .startButton:
+                        print("")
+                    case .buttonPauseResume:
                         print("")
                 //
                     case .buttonLeft:
@@ -229,18 +229,18 @@ extension LevelScene{
                     case .buttonDown:
                         print("")
                     case .buttonA:
-                        pressA()
+//                        pressA()
+                        print("")
                     case .buttonB:
                         pressB()
-                //
-                    case .buttonPauseResume:
-                        print("")
                     case .buttonSpecail:
                         print("")
+                //
                     case .labelScores:
                         print("")
                     case .labelLives:
                         print("")
+                //
                     case .mainHero:
                         print("main hero")
                 }
@@ -322,7 +322,6 @@ extension LevelScene: SKPhysicsContactDelegate{
         }
     }
 }
-
 
 #Preview {
     StartView()
