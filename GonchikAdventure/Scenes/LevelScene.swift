@@ -9,14 +9,40 @@ import SwiftUI
 import SpriteKit
 
 class LevelScene: RootScene{
-    
     enum LevelScneState {
         case paused, playing
     }
-    
     enum CameraPositionState: String {
         case nearEdge, idle
     }
+    enum ButtonState {
+        case tapped, untapped
+    }
+    
+    //hud state
+    var leftButtonState: ButtonState = .untapped
+    {
+        willSet{
+            mainHeroNode.moveLeft()
+        }
+    }
+    var rightButtonState: ButtonState = .untapped
+    {
+        willSet{
+            mainHeroNode.moveRight()
+        }
+    }
+    var AButtonState: ButtonState = .untapped
+    {
+        willSet{
+            mainHeroNode.jump()
+        }
+    }
+    
+    var BButtonState: ButtonState = .untapped
+    var pauseButtonState: ButtonState = .untapped
+    var specialButtonState: ButtonState = .untapped
+    
     // last update scene time
     var lastUpdateTime: TimeInterval = 0
     
@@ -25,29 +51,41 @@ class LevelScene: RootScene{
     
     var sceneState: LevelScneState = .playing
     var mainHeroNode: GameUnit = GameUnit()
+    var bgNode: DungeonBackgroundNode = DungeonBackgroundNode()
     
-    
-    var bgSize: CGSize = CGSize.zero
+    var levelSize: CGSize {
+        get{
+            CGSize(width: size.width * 2, height: size.height * 2)
+        }
+    }
     var cameraScaleFactor: CGFloat = 1
+    
+    // MARK: - TestLevel Array
+    let lelelObstacles: [[RockTiles]] = [
+        Array(repeating: .fullRock, count: 10),
+        Array(repeating: .topRock, count: 10),
+        [.rightRockEdge],
+        [.rightRockEdge],
+        Array(repeating: .centerSurface, count: 10),
+        Array(repeating: .fullRock, count: 10),
+        Array(repeating: .fullRock, count: 10)
+    ]
     
     override func didMove(to view: SKView) {
         size = view.frame.size
         scaleMode = .aspectFill
-        createSceneContents()
+//        createSceneContents()
         setupLevel()
         setupCamera()
     }
 
     //camera & hud
     func setupCamera(){
-        
         let cameraNode = SKCameraNode()
         cameraNode.name = NodeNames.camera.name
-
         let hudNode = PlayLevelHudNode(withCameraSize: size)
-        hudNode.zPosition = 10
+        hudNode.zPosition = 100
         cameraNode.addChild(hudNode)
-        
         addChild(cameraNode)
         camera = cameraNode
         cameraNode.position = CGPoint(x: size.width / 2,
@@ -58,84 +96,118 @@ class LevelScene: RootScene{
     func makeCameraConstraints(){
         if let camera {
             camera.constraints = [
-                SKConstraint.positionX(SKRange(lowerLimit: size.width  / 2, upperLimit: bgSize.width - size.width / 2),
-                                       y: SKRange(lowerLimit: size.height / 2, upperLimit: bgSize.height - size.height / 2))
+                SKConstraint.positionX(SKRange(lowerLimit: size.width  / 2, upperLimit: bgNode.bounds.size.width - size.width / 2),
+                                       y: SKRange(lowerLimit: size.height / 2, upperLimit: bgNode.bounds.height - size.height / 2))
             ]
         }
     }
     
     func setupLevel(){
-        //add bg
         addBG()
-        //add obstacles
         addLevelObstacles()
-        //setup physics
         setupPhysics()
-        //add mainUnit
         addMainHero()
     }
     
     func addBG(){
-        let bgNode = SKSpriteNode(color: .blue,
-                                  size:  CGSize(width: size.width  - 100,
-                                                height:  size.height  - 100))
-        bgNode.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(origin: CGPoint(x: (-size.width + 100) / 2, y: (-size.height + 100) / 2), size: CGSize(width: size.width - 100 , height: size.height - 100)))
-        bgNode.physicsBody?.categoryBitMask = PhysicsCategory.Edges
-//        bgNode.physicsBody?.contactTestBitMask = PhysicsCategory.Edges
+        bgNode.setup(withSize: size,fullSize: levelSize)
+//        bgNode.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(origin: CGPoint(x: (-size.width + 100) / 2, y: (-size.height + 100) / 2), size: CGSize(width: size.width - 100 , height: size.height)))
+////        bgNode.physicsBody?.isDynamic = false
+//        bgNode.physicsBody?.categoryBitMask = PhysicsCategory.Edges
+//        bgNode.physicsBody?.restitution = 0
         bgNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
         addChild(bgNode)
-        bgSize = bgNode.size
     }
     
     func addLevelObstacles(){
-        let rect = SKSpriteNode(color: .green, size: CGSize(width: 500, height: 10))
+        let rect = SKSpriteNode(color: .green,
+                                size: CGSize(width: 500, height: 10))
         rect.physicsBody = SKPhysicsBody(rectangleOf: rect.size)
         rect.position = CGPoint(x: size.width / 2,
                                 y: size.height * 2 / 5)
         rect.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle
-        rect.zPosition = 1
+        rect.zPosition = 10
         rect.physicsBody?.isDynamic = false
-//        rect.physicsBody?.isResting = true
-//        rect.physicsBody?.affectedByGravity = true
+        rect.physicsBody?.isResting = true
         addChild(rect)
+//        
+//        let rect2 = SKSpriteNode(color: .green, size: CGSize(width: 50, height: 10))
+//        rect2.physicsBody = SKPhysicsBody(rectangleOf: rect2.size)
+//        rect2.position = CGPoint(x: (size.width / 2) - 60,
+//                                y: size.height * 2 / 5)
+//        rect2.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle
+//        rect2.zPosition = 10
+//        rect2.physicsBody?.isDynamic = false
+//        rect2.physicsBody?.isResting = true
+//        addChild(rect2)
+//        
+//        let rect3 = SKSpriteNode(color: .green, size: CGSize(width: 50, height: 10))
+//        rect3.physicsBody = SKPhysicsBody(rectangleOf: rect3.size)
+//        rect3.position = CGPoint(x: (size.width / 2) - 110,
+//                                y: size.height * 2 / 5)
+//        rect3.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle
+//        rect3.zPosition = 10
+//        rect3.physicsBody?.isDynamic = false
+//        rect3.physicsBody?.isResting = true
+//        addChild(rect3)
+//        
+//        
+//        rect.physicsBody?.affectedByGravity = true
+        
+//        for i in lelelObstacles.enumerated(){
+//            for j in i.element.enumerated(){
+//                if !j.element.rawValue.isEmpty{
+//                    let obstacle = ObstacleNode()
+//                    obstacle.setup(name: j.element)
+//                    obstacle.name = "\(j.element.rawValue): x: \(j.offset), y:\(i.offset)"
+//                    obstacle.position = CGPoint(x: CGFloat(64 * j.offset), y: size.height - CGFloat(64 * i.offset))
+//                    //                print("\(j.element) \(obstacle.position)")
+//                    addChild(obstacle)
+//                }
+//            }
+//        }
     }
     
     func setupPhysics(){
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         physicsWorld.contactDelegate = self
-        
-        
-       
     }
     
-    func createSceneContents() {
-        self.backgroundColor = .orange
-//        self.scaleMode = .aspectFit
-//        self.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: size.width * 2, height: size.height * 2 ))
-    }
+//    func createSceneContents() {
+//        self.backgroundColor = .orange
+////        self.scaleMode = .aspectFit
+////        self.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: size.width * 2, height: size.height * 2 ))
+//        
+//    }
     
     func addMainHero(){
-        let texture = SKTexture(vectorNoiseWithSmoothness: 1, size: CGSize(width: 30, height: 30))
-        let mainHero = GameUnit(texture: texture, color: .red, size: CGSize(width: 30, height: 30))
+        let mainHero = GameUnit()
+        mainHero.setup()
         mainHeroNode = mainHero
-        mainHero.zPosition = 2
+        mainHero.zPosition = 20
         mainHero.position = CGPoint(x: size.width / 2,
                                     y: size.height / 2)
         mainHero.name = NodeNames.mainHero.name
         mainHero.setupPhysics()
         
         addChild(mainHero)
+        mainHero.stopMoving()
     }
     
     // MARK: - Update
     override func update(_ currentTime: TimeInterval) {
-//        if lastUpdateTime > 0 {
-//            dt = currentTime - lastUpdateTime
-//        } else {
-//            dt = 0
-//        }
-//        lastUpdateTime = currentTime
-//        
+
+        if lastUpdateTime > 0 {
+            dt = currentTime - lastUpdateTime
+        } else {
+            dt = 0
+        }
+        lastUpdateTime = currentTime
+        
+        if dt > 0.01{
+            bgNode.updateBG(pos: mainHeroNode.position)
+        }
+//
 //        switch mainHeroNode.state {
 //            case .moving:
 //                print("moving")
@@ -155,46 +227,44 @@ class LevelScene: RootScene{
 
 // MARK: - Touches
 extension LevelScene{
+    
+    // TODO: multiple button touch funcionality
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         let node = atPoint(location)
+        
         if node is BaseButtonNode{
             (node as! BaseButtonNode).changeState()
             if let name = node.name, let nodeName = NodeNames(rawValue: name){
-//                print(nodeName.name + "started")
                 switch nodeName {
-                    case .camera:
-                        print("")
-                    case .bg:
-                        print("")
-                    case .startButton:
-                        print("")
-                //
+//                    case .camera:
+//                    case .bg:
+//                    case .startButton:
                     case .buttonLeft:
-                        pressLeft()
+                        leftButtonState = .tapped
                     case .buttonRight:
-                        pressRight()
-                    case .buttonUp:
-                        print("")
-                    case .buttonDown:
-                        print("")
+                        rightButtonState = .tapped
+//                    case .buttonUp:
+//                    case .buttonDown:
                     case .buttonA:
-                        pressA()
+                        AButtonState = .tapped
                     case .buttonB:
-                        pressB()
+                        BButtonState = .tapped
                 //
-                    case .buttonPauseResume:
-                        print("")
+//                    case .buttonPauseResume:
+//                        print("")
                     case .buttonSpecail:
-                        print("")
-                    case .labelScores:
-                        print("")
-                    case .labelLives:
-                        print("")
-                    case .mainHero:
-                        print("main hero")
+                        specialButtonState = .tapped
+//                    case .labelScores:
+//                        print("")
+//                    case .labelLives:
+//                        print("")
+//                    case .mainHero:
+//                        print("main hero")
+                    default: break
                 }
             }
         }
@@ -208,41 +278,46 @@ extension LevelScene{
 
         if node is BaseButtonNode{
             (node as! BaseButtonNode).changeState()
-            if let name = node.name, let nodeName = NodeNames(rawValue: name){
+            if let name = node.name,
+               let nodeName = NodeNames(rawValue: name){
                 switch nodeName {
-                    case .camera:
-                        print("")
-                    case .bg:
-                        print("")
+//                    case .camera:
+//                        print("")
+//                    case .bg:
+//                        print("")
                 //
-                    case .startButton:
-                        print("")
-                    case .buttonPauseResume:
-                        print("")
+//                    case .startButton:
+//
+//                    case .buttonPauseResume:
                 //
                     case .buttonLeft:
+                        leftButtonState = .untapped
+                        mainHeroNode.horizontalMoveState = .idle
                         stopMoving()
                     case .buttonRight:
+                        rightButtonState = .untapped
+                        mainHeroNode.horizontalMoveState = .idle
                         stopMoving()
-                    case .buttonUp:
-                        print("")
-                    case .buttonDown:
-                        print("")
+//                    case .buttonUp:
+
+//                    case .buttonDown:
                     case .buttonA:
+                        AButtonState = .untapped
 //                        pressA()
-                        print("")
                     case .buttonB:
-                        pressB()
-                    case .buttonSpecail:
-                        print("")
+                        BButtonState = .untapped
+//                        pressB()
+//                    case .buttonSpecail:
+//                        print("")
                 //
-                    case .labelScores:
-                        print("")
-                    case .labelLives:
-                        print("")
+//                    case .labelScores:
+//                        print("")
+//                    case .labelLives:
+//                        print("")
                 //
-                    case .mainHero:
-                        print("main hero")
+//                    case .mainHero:
+//                        print("main hero")
+                    default: return
                 }
             }
         }
@@ -251,40 +326,35 @@ extension LevelScene{
 
 // MARK: - HudDelegeteProtocol
 extension LevelScene: HudDelegateProtocol{
-    
     func stopMoving(){
         mainHeroNode.stopMoving()
     }
     
     func pressLeft() {
-
-        
 //        camera?.run(SKAction.moveTo(x: round(mainHeroNode.position.x - size.width / 4), duration: 0.2))
-        mainHeroNode.moveLeft()
+//        mainHeroNode.moveLeft()
 //        camera?.run(SKAction.moveBy(x: -30, y: 0, duration: 0.2))
     }
     
     func pressRight() {
-                
-
 //        camera?.run(SKAction.moveTo(x: round(mainHeroNode.position.x + size.width / 4), duration: 0.2))
 //        let newLocation = CGPoint(x: round(mainHeroNode.position.x + 30),
 //                                  y: mainHeroNode.position.y)
 //        
 //        mainHeroNode.run(SKAction.move(to: newLocation,
 //                                       duration: 0.2))
-        mainHeroNode.moveRight()
-        camera?.run(SKAction.moveBy(x: 30, y: 0, duration: 0.2))
+//        mainHeroNode.moveRight()
+//        camera?.run(SKAction.moveBy(x: 30, y: 0, duration: 0.2))
 
     }
     
     func pressA() {
 //        print("press A action")
-        mainHeroNode.jump()
+//        mainHeroNode.jump()
     }
     
     func pressB() {
-        print("press B action")
+//        print("press B action")
     }
     
     func pressSpecial() {
@@ -299,26 +369,38 @@ extension LevelScene: HudDelegateProtocol{
 // MARK: - PhysicsContactDelegate
 extension LevelScene: SKPhysicsContactDelegate{
     func didBegin(_ contact: SKPhysicsContact) {
-        //print("collision begin: normal - \(contact.contactNormal), point: \(contact.contactPoint), mainHeroPoint: \(mainHeroNode.position), impulse: \(contact.collisionImpulse)")
-//using contactNormal we can depend where collision was made dy=1: down, dy=-1: up,
-// dx=1: left, dx=-1: right
+        //using contactNormal we can depend where collision was made
+        // dy ==  1: down,
+        // dy == -1: up,
+        // dx ==  1: left,
+        // dx == -1: right
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        
         let normal = contact.contactNormal
-        switch normal {
-            default : break
-        }
         
-        if collision == (PhysicsCategory.Player | PhysicsCategory.Obstacle)   {
-            mainHeroNode.stopMoving()
-        } else if collision == (PhysicsCategory.Player | PhysicsCategory.Edges)   {
-            mainHeroNode.stopMoving()
+//        if contact.bodyA.categoryBitMask == PhysicsCategory.Player || contact.bodyB.categoryBitMask == PhysicsCategory.Player{
+//            let contactBody = contact.bodyA.categoryBitMask == PhysicsCategory.Player ? contact.bodyB:contact.bodyA
+//        }
+        
+        if normal.dy > 0, mainHeroNode.verticalMoveState != .idle{
+            print("begin coll")
+            mainHeroNode.verticalMoveState = .idle
+            if collision == (PhysicsCategory.Player | PhysicsCategory.Obstacle){
+                mainHeroNode.stopMoving()
+            } else if collision == (PhysicsCategory.Player | PhysicsCategory.Edges){
+                mainHeroNode.stopMoving()
+            }
         }
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        let normal = contact.contactNormal
+       
         if collision == PhysicsCategory.Player | PhysicsCategory.Obstacle {
+            print("end coll, normal: \(normal), \(contact.bodyA.node?.name), \(contact.bodyB.node?.name)")
+            if normal.dy < 0 {
+                mainHeroNode.fall()
+            }
         }
     }
 }

@@ -23,7 +23,7 @@ class HomeScene: RootScene {
     }
     
     func addBG(){
-        let bgNode = BackgroundNode(withSize: size)
+        let bgNode = MainMenuBackgroundNode(withSize: size)
         bgNode.name = NodeNames.bg.name
         addChild(bgNode)
     }

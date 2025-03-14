@@ -1,7 +1,7 @@
 import SpriteKit
 import SwiftUI
 
-class BackgroundNode: SKNode{
+class MainMenuBackgroundNode: SKNode{
     
     let size: CGSize
     var sunNode: SKNode = SKNode()

@@ -27,7 +27,7 @@ class PlayLevelHudNode: SKNode{
                              size: CGSize(width: size.width * buttonSize,
                                           height: size.width * buttonSize),
                              position: CGPoint(x: -size.width * 3.7 * scaleFactor,
-                                               y: -size.height * 3 * scaleFactor))
+                                               y: -size.height * 3.5 * scaleFactor))
         leftButtonNode.changeState()
         leftButtonNode.name = NodeNames.buttonLeft.name
         
@@ -38,7 +38,7 @@ class PlayLevelHudNode: SKNode{
                               size: CGSize(width: size.width * buttonSize,
                                            height: size.width * buttonSize),
                               position: CGPoint(x: -size.width * 2.7 * scaleFactor,
-                                                y: -size.height * 3 * scaleFactor))
+                                                y: -size.height * 3.5 * scaleFactor))
         rightButtonNode.name = NodeNames.buttonRight.name
         rightButtonNode.changeState()
         
@@ -47,8 +47,8 @@ class PlayLevelHudNode: SKNode{
         aButtonNode.setup(withName: "silver-A",
                           size: CGSize(width: size.width * buttonSize,
                                        height: size.width * buttonSize),
-                          position: CGPoint(x: size.width * 2.5 * scaleFactor,
-                                            y: -size.height * 3 * scaleFactor))
+                          position: CGPoint(x: size.width * 2.7 * scaleFactor,
+                                            y: -size.height * 3.5 * scaleFactor))
         aButtonNode.name = NodeNames.buttonA.name
         aButtonNode.changeState()
         
@@ -59,7 +59,7 @@ class PlayLevelHudNode: SKNode{
                           size: CGSize(width: size.width * buttonSize,
                                        height: size.width * buttonSize),
                           position: CGPoint(x: size.width * 3.7 * scaleFactor,
-                                            y: -size.height * 2 * scaleFactor))
+                                            y: -size.height * 3.25 * scaleFactor))
         bButtonNode.name = NodeNames.buttonB.name
         bButtonNode.changeState()
         
