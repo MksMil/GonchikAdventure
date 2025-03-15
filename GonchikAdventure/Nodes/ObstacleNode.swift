@@ -16,14 +16,14 @@ class ObstacleNode: SKSpriteNode{
     }
     
     func setupPhysics(name: RockTiles){
-//        physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: name.rawValue), size: CGSize(width: 64, height: 64))
-        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 40))
+        physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: name.rawValue), size: CGSize(width: 64, height: 64))
+//        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 40))
 //        SKPhysicBody
         physicsBody?.restitution = 0 //отскок(упругость) [0:1] 0 - не отскакиевает
         physicsBody?.density = 1 //плотность
         physicsBody?.isDynamic = false
         physicsBody?.isResting = true
-        physicsBody?.friction = 0.3 //сопротивление
+        physicsBody?.friction = 0.2 //сопротивление
         physicsBody?.affectedByGravity = false
         physicsBody?.linearDamping = 0 //затухание линейной скорости
         physicsBody?.angularDamping = 0 //затухание угловой скорости

@@ -71,12 +71,30 @@ class LevelScene: RootScene{
         Array(repeating: .fullRock, count: 10)
     ]
     
+    // 🎯 Convenience initializer
+        convenience init?(fileNamed: String) {
+            guard let scene = SKScene(fileNamed: fileNamed) else { return nil }     
+            self.init(size: scene.size)
+            scene.children.forEach({addChild($0)})
+        }
+    // 🎯 Designated initializer
+        override init(size: CGSize) {
+            super.init(size: size)
+        }
+        
+        // 🎯 Required initializer for NSCoding
+        required init?(coder aDecoder: NSCoder) {
+            super.init(coder: aDecoder)
+        }
+    
+    
     override func didMove(to view: SKView) {
-        size = view.frame.size
-        scaleMode = .aspectFill
-//        createSceneContents()
-        setupLevel()
-        setupCamera()
+//        let tileMap = SKTileMapNode(fileNamed: "")
+//        size = view.frame.size
+//        scaleMode = .aspectFill
+////        createSceneContents()
+//        setupLevel()
+//        setupCamera()
     }
 
     //camera & hud
@@ -109,6 +127,10 @@ class LevelScene: RootScene{
         addMainHero()
     }
     
+    func setupLevel(map: SKTileMapNode){
+        
+    }
+    
     func addBG(){
         bgNode.setup(withSize: size,fullSize: levelSize)
 //        bgNode.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(origin: CGPoint(x: (-size.width + 100) / 2, y: (-size.height + 100) / 2), size: CGSize(width: size.width - 100 , height: size.height)))
@@ -121,7 +143,7 @@ class LevelScene: RootScene{
     
     func addLevelObstacles(){
         let rect = SKSpriteNode(color: .green,
-                                size: CGSize(width: 500, height: 10))
+                                size: CGSize(width: 50, height: 10))
         rect.physicsBody = SKPhysicsBody(rectangleOf: rect.size)
         rect.position = CGPoint(x: size.width / 2,
                                 y: size.height * 2 / 5)
@@ -129,43 +151,44 @@ class LevelScene: RootScene{
         rect.zPosition = 10
         rect.physicsBody?.isDynamic = false
         rect.physicsBody?.isResting = true
+        rect.physicsBody?.affectedByGravity = true
         addChild(rect)
-//        
-//        let rect2 = SKSpriteNode(color: .green, size: CGSize(width: 50, height: 10))
-//        rect2.physicsBody = SKPhysicsBody(rectangleOf: rect2.size)
-//        rect2.position = CGPoint(x: (size.width / 2) - 60,
-//                                y: size.height * 2 / 5)
-//        rect2.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle
-//        rect2.zPosition = 10
-//        rect2.physicsBody?.isDynamic = false
-//        rect2.physicsBody?.isResting = true
-//        addChild(rect2)
-//        
-//        let rect3 = SKSpriteNode(color: .green, size: CGSize(width: 50, height: 10))
-//        rect3.physicsBody = SKPhysicsBody(rectangleOf: rect3.size)
-//        rect3.position = CGPoint(x: (size.width / 2) - 110,
-//                                y: size.height * 2 / 5)
-//        rect3.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle
-//        rect3.zPosition = 10
-//        rect3.physicsBody?.isDynamic = false
-//        rect3.physicsBody?.isResting = true
-//        addChild(rect3)
-//        
-//        
-//        rect.physicsBody?.affectedByGravity = true
         
-//        for i in lelelObstacles.enumerated(){
-//            for j in i.element.enumerated(){
-//                if !j.element.rawValue.isEmpty{
-//                    let obstacle = ObstacleNode()
-//                    obstacle.setup(name: j.element)
-//                    obstacle.name = "\(j.element.rawValue): x: \(j.offset), y:\(i.offset)"
-//                    obstacle.position = CGPoint(x: CGFloat(64 * j.offset), y: size.height - CGFloat(64 * i.offset))
-//                    //                print("\(j.element) \(obstacle.position)")
-//                    addChild(obstacle)
-//                }
-//            }
-//        }
+        let rect2 = SKSpriteNode(color: .green, size: CGSize(width: 50, height: 10))
+        rect2.physicsBody = SKPhysicsBody(rectangleOf: rect2.size)
+        rect2.position = CGPoint(x: (size.width / 2) - 60,
+                                y: size.height * 2 / 5)
+        rect2.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle
+        rect2.zPosition = 10
+        rect2.physicsBody?.isDynamic = false
+        rect2.physicsBody?.isResting = true
+        addChild(rect2)
+        
+        let rect3 = SKSpriteNode(color: .green, size: CGSize(width: 50, height: 10))
+        rect3.physicsBody = SKPhysicsBody(rectangleOf: rect3.size)
+        rect3.position = CGPoint(x: (size.width / 2) - 110,
+                                y: size.height * 2 / 5)
+        rect3.physicsBody?.categoryBitMask = PhysicsCategory.Obstacle
+        rect3.zPosition = 10
+        rect3.physicsBody?.isDynamic = false
+        rect3.physicsBody?.isResting = true
+        addChild(rect3)
+        
+        
+        
+        
+        for i in lelelObstacles.enumerated(){
+            for j in i.element.enumerated(){
+                if !j.element.rawValue.isEmpty{
+                    let obstacle = ObstacleNode()
+                    obstacle.setup(name: j.element)
+                    obstacle.name = "\(j.element.rawValue): x: \(j.offset), y:\(i.offset)"
+                    obstacle.position = CGPoint(x: CGFloat(64 * j.offset), y: size.height - CGFloat(64 * i.offset))
+                    //                print("\(j.element) \(obstacle.position)")
+                    addChild(obstacle)
+                }
+            }
+        }
     }
     
     func setupPhysics(){
@@ -207,21 +230,7 @@ class LevelScene: RootScene{
         if dt > 0.01{
             bgNode.updateBG(pos: mainHeroNode.position)
         }
-//
-//        switch mainHeroNode.state {
-//            case .moving:
-//                print("moving")
-//            case .stop:
-//                print("stop")
-//            case .accelerate:
-//                print("accelerate")
-//            case .decelerate:
-//                print("decelerate")
-//            case .jumping:
-//                print("jumping")
-//            case .falling:
-//                print("falling")
-//        }
+
     }
 }
 
@@ -381,15 +390,19 @@ extension LevelScene: SKPhysicsContactDelegate{
 //            let contactBody = contact.bodyA.categoryBitMask == PhysicsCategory.Player ? contact.bodyB:contact.bodyA
 //        }
         
-        if normal.dy > 0, mainHeroNode.verticalMoveState != .idle{
-            print("begin coll")
-            mainHeroNode.verticalMoveState = .idle
+        if normal.dy > 0, mainHeroNode.verticalMoveState != .onGround{
+//            print("begin coll")
+            mainHeroNode.verticalMoveState = .onGround
+            mainHeroNode.endJumpValue = Date.now
+//            print("dif: \(mainHeroNode.startJumpValue.timeIntervalSince1970 - mainHeroNode.endJumpValue.timeIntervalSince1970)")
             if collision == (PhysicsCategory.Player | PhysicsCategory.Obstacle){
                 mainHeroNode.stopMoving()
             } else if collision == (PhysicsCategory.Player | PhysicsCategory.Edges){
                 mainHeroNode.stopMoving()
             }
         }
+        
+        
     }
     
     func didEnd(_ contact: SKPhysicsContact) {
@@ -397,10 +410,13 @@ extension LevelScene: SKPhysicsContactDelegate{
         let normal = contact.contactNormal
        
         if collision == PhysicsCategory.Player | PhysicsCategory.Obstacle {
-            print("end coll, normal: \(normal), \(contact.bodyA.node?.name), \(contact.bodyB.node?.name)")
+//            print("end coll, normal: \(normal), \(contact.bodyA.node?.name), \(contact.bodyB.node?.name)")
             if normal.dy < 0 {
                 mainHeroNode.fall()
+            } else {
+                mainHeroNode.acceptCompenstionVelosity(compenstionVelocity: normal)
             }
+            
         }
     }
 }

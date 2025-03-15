@@ -7,8 +7,10 @@ final class MainRouter: ObservableObject, MainViewDelegateProtocol{
 
     //init with HomeScene
     init() {
-        self.activeScene = LevelScene()//HomeScene()
+        
+        self.activeScene =  LevelScene(fileNamed: "TestScene") ?? LevelScene(size: CGSize.zero)//HomeScene()
         self.activeScene.mainViewDelegate = self
+        
     }
     
     
@@ -20,7 +22,7 @@ extension MainRouter{
         var newScene: RootScene
         switch scene {
             case .levelScene:
-                newScene = LevelScene()
+                newScene = LevelScene(fileNamed: "TestScene") ?? LevelScene(size: CGSize.zero)
             case .home:
                 newScene = HomeScene()
         }

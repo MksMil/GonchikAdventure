@@ -6,6 +6,9 @@
 import SpriteKit
 
 class GameUnit: SKSpriteNode{
+    //testing var
+    var startJumpValue: Date = Date()
+    var endJumpValue: Date = Date()
     
     enum HeroDirection {
         case left, right
@@ -15,7 +18,7 @@ class GameUnit: SKSpriteNode{
         case moveLeft, moveRight, idle
     }
     enum VerticalMoveState{
-        case jump, fall, idle
+        case jump, fall, onGround
     }
     
     var direction: HeroDirection = .left
@@ -25,7 +28,7 @@ class GameUnit: SKSpriteNode{
             print("horiz:" + "\(newValue)")
         }
     }
-    var verticalMoveState: VerticalMoveState = .idle
+    var verticalMoveState: VerticalMoveState = .onGround
     {
         willSet{
             print("vertical:" + "\(newValue)")
@@ -61,7 +64,7 @@ class GameUnit: SKSpriteNode{
     
     var jumpUpTextures: [SKTexture] = {
         var array = [SKTexture]()
-        (0...4).forEach { num in
+        (0...2).forEach { num in
             array.append(SKTexture(imageNamed: "teddy_jumpUp_\(num)"))
         }
         return array
@@ -88,9 +91,9 @@ class GameUnit: SKSpriteNode{
         physicsBody?.restitution = 0 //отскок(упругость) [0:1] 0 - не отскакиевает
         physicsBody?.density = 1 //плотность
         physicsBody?.isDynamic = true
-        physicsBody?.friction = 0 //сопротивление
+        physicsBody?.friction = 0.2 //сопротивление
         
-        physicsBody?.linearDamping = 0 //затухание линейной скорости
+        physicsBody?.linearDamping = 0.1 //затухание линейной скорости
         physicsBody?.angularDamping = 0 //затухание угловой скорости
         
         physicsBody?.allowsRotation = false
@@ -119,7 +122,7 @@ class GameUnit: SKSpriteNode{
             moveRight()
         }
         horizontalMoveState = .moveRight
-        if verticalMoveState == .idle{
+        if verticalMoveState == .onGround{
             run(SKAction.repeatForever(SKAction.animate(with: moveLeftTextures, timePerFrame: 0.035)))
         }
         physicsBody?.velocity = horizontalVelocity
@@ -133,7 +136,7 @@ class GameUnit: SKSpriteNode{
             moveLeft()
         }
         horizontalMoveState = .moveLeft
-        if verticalMoveState == .idle{
+        if verticalMoveState == .onGround{
             run(SKAction.repeatForever(SKAction.animate(with: moveLeftTextures, timePerFrame: 0.035)))
         }
         physicsBody?.velocity = horizontalVelocity * (-1.0)
@@ -141,14 +144,19 @@ class GameUnit: SKSpriteNode{
     
     func startJump(){
         self.verticalMoveState = .jump
-            self.run(SKAction.repeatForever(SKAction.animate(with: self.jumpUpTextures, timePerFrame: 0.1)))
+        let jumpUpAction = SKAction.animate(with: self.jumpUpTextures, timePerFrame: 0.1)
+        let fallAction = SKAction.repeatForever(SKAction.animate(with: jumpDownTextures, timePerFrame: 0.1))
+        run(SKAction.sequence([jumpUpAction,
+                               SKAction.wait(forDuration: 0.03),
+                               fallAction]))
             self.physicsBody?.velocity = self.verticalVelocity
+        
     }
-    func startFall(){
-        verticalMoveState = .fall
-//        self.physicsBody?.velocity = (self.verticalVelocity * (-1))
-        run(SKAction.animate(with: jumpDownTextures, timePerFrame: 0.1))
-    }
+//    func startFall(){
+//        verticalMoveState = .fall
+////        self.physicsBody?.velocity = (self.verticalVelocity * (-1))
+//        run(SKAction.animate(with: jumpDownTextures, timePerFrame: 0.1))
+//    }
  
     func jump(){
         switch verticalMoveState {
@@ -167,10 +175,21 @@ class GameUnit: SKSpriteNode{
 
     
     func stopMoving(){
-        if verticalMoveState == .idle , horizontalMoveState == .idle{
+        if verticalMoveState == .onGround , horizontalMoveState == .idle{
             physicsBody?.velocity = CGVector.zero
             stopAnimation()
         }
+    }
+    
+    func acceptCompenstionVelosity(compenstionVelocity: CGVector){
+//        let vel = compenstionVelocity * (-1)
+//        physicsBody?.velocity += vel
+        if horizontalMoveState == .moveLeft{
+            physicsBody?.velocity = horizontalVelocity * (-1)
+        } else if horizontalMoveState == .moveRight{
+            physicsBody?.velocity = horizontalVelocity
+        }
+//        print("new velocity = \(physicsBody?.velocity)")
     }
     
 //    func stopHorizontalMoving(){
