@@ -1,23 +1,16 @@
 import SpriteKit
 import SwiftUI
-import CoreGraphics
 
 struct StartView: View {
     
     @StateObject var mainRouter = MainRouter()
-//    var scene = SKScene(fileNamed: "TestScene")
     
     var body: some View {
-//        if let scene{
             SpriteView(
                 scene: mainRouter.activeScene ,
-                debugOptions: [.showsFPS, .showsNodeCount]
+                debugOptions: [.showsFPS, .showsNodeCount,.showsPhysics]
             )
             .ignoresSafeArea()
-//        } else {
-//            Color.red
-//        }
-        
     }
 }
 

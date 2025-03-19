@@ -3,41 +3,24 @@
 //
 
 //import Foundation
+import GameplayKit
 import SpriteKit
 
 class GameUnit: SKSpriteNode{
-    //testing var
-    var startJumpValue: Date = Date()
-    var endJumpValue: Date = Date()
+ 
+    var direction: UnitDirection = .left
     
-    enum HeroDirection {
-        case left, right
-    }
+    var horizontalMoveState: UnitHState = .idle
+    var verticalMoveState: UnitVState = .onGround
+
+    var horizontalVelocity: CGFloat = 2.0
+    var verticalVelocity: CGFloat = 0.0
+    var vAccelerate: CGFloat = 0.0
+    var vDecelerate: CGFloat = 0.0
     
-    enum HorizontalMoveState{
-        case moveLeft, moveRight, idle
-    }
-    enum VerticalMoveState{
-        case jump, fall, onGround
-    }
+    var stateMachine: GKStateMachine?
     
-    var direction: HeroDirection = .left
-    var horizontalMoveState: HorizontalMoveState = .idle
-    {
-        willSet{
-            print("horiz:" + "\(newValue)")
-        }
-    }
-    var verticalMoveState: VerticalMoveState = .onGround
-    {
-        willSet{
-            print("vertical:" + "\(newValue)")
-        }
-    }
-    
-    var horizontalVelocity: CGVector = CGVectorMake(250, 0)
-    var verticalVelocity: CGVector = CGVectorMake(0, 600)
-    
+    //Textures
     var idleTextures: [SKTexture] = {
         var array = [SKTexture]()
         (0...11).forEach { num in
@@ -45,7 +28,6 @@ class GameUnit: SKSpriteNode{
         }
         return array
     }()
-    
     var moveLeftTextures: [SKTexture] = {
         var array = [SKTexture]()
         (0...11).forEach { num in
@@ -53,7 +35,6 @@ class GameUnit: SKSpriteNode{
         }
         return array
     }()
-    
     var jumpBeginTextures: [SKTexture] = {
         var array = [SKTexture]()
         (0...7).forEach { num in
@@ -61,7 +42,6 @@ class GameUnit: SKSpriteNode{
         }
         return array
     }()
-    
     var jumpUpTextures: [SKTexture] = {
         var array = [SKTexture]()
         (0...2).forEach { num in
@@ -69,7 +49,6 @@ class GameUnit: SKSpriteNode{
         }
         return array
     }()
-    
     var jumpDownTextures: [SKTexture] = {
         var array = [SKTexture]()
         (0...4).forEach { num in
@@ -78,41 +57,46 @@ class GameUnit: SKSpriteNode{
         return array
     }()
     
+    //
     func setup(){
         self.size = CGSize(width: 64, height: 64)
         self.texture = SKTexture(imageNamed: "teddy_idle_0")
+        self.setupStateMachine()
         self.stopAnimation()
     }
     
     func setupPhysics(){
         physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "teddy_idle_0"), size: CGSize(width: 64, height: 64))
-//        physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 30, height: 50))
-//        physicsBody = SKPhysicsBody(circleOfRadius: 25)
         physicsBody?.restitution = 0 //отскок(упругость) [0:1] 0 - не отскакиевает
-        physicsBody?.density = 1 //плотность
+        physicsBody?.density = 10 //плотность
         physicsBody?.isDynamic = true
         physicsBody?.friction = 0.2 //сопротивление
         
-        physicsBody?.linearDamping = 0.1 //затухание линейной скорости
+        physicsBody?.linearDamping = 0 //затухание линейной скорости
         physicsBody?.angularDamping = 0 //затухание угловой скорости
         
         physicsBody?.allowsRotation = false
         
         physicsBody?.categoryBitMask = PhysicsCategory.Player
         //своя категория
-        physicsBody?.contactTestBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Edges
+        physicsBody?.contactTestBitMask = /*PhysicsCategory.Obstacle |*/ PhysicsCategory.Edges
         //с какой категорией проводится тест на контакт при симуляции физики
         
-        physicsBody?.collisionBitMask = PhysicsCategory.Obstacle | PhysicsCategory.Edges
+        physicsBody?.collisionBitMask = PhysicsCategory.Obstacle
         // контакт с какой категорией влияет на это тело, по умоланию все категории
 
     }
     
+    func setupStateMachine(){
+//        let normalState = UnitNormalState(unit: self)
+//        stateMachine = GKStateMachine(states: [normalState])
+//        stateMachine?.enter(UnitNormalState.self)
+    }
+    
     func changeDirection(){
-        let turnAction = SKAction.scaleX(by: -1,y: 1, duration: 0.01)
-        let chAction = SKAction.moveBy(x: size.width * (direction == .left ? (-1):1) / 3,
-                                       y: 0, duration: 0.01)
-        run(SKAction.group([turnAction, chAction]))
+        scale(to: CGSize(width: direction == .left ? -size.width: size.width, height: size.height))
+        position = CGPoint(x: position.x + (direction == .left ? -size.width / 4: size.width / 4),
+                           y: position.y)
     }
     
     func moveRight(){
@@ -122,10 +106,12 @@ class GameUnit: SKSpriteNode{
             moveRight()
         }
         horizontalMoveState = .moveRight
-        if verticalMoveState == .onGround{
-            run(SKAction.repeatForever(SKAction.animate(with: moveLeftTextures, timePerFrame: 0.035)))
-        }
-        physicsBody?.velocity = horizontalVelocity
+//        if verticalMoveState == .onGround{
+//            run(SKAction.repeatForever(SKAction.animate(with: moveLeftTextures, timePerFrame: 0.035)))
+//        }
+//        physicsBody?.velocity = horizontalVelocity
+        position = CGPoint(x: position.x + horizontalVelocity,
+                           y: position.y)
 
     }
     
@@ -136,10 +122,12 @@ class GameUnit: SKSpriteNode{
             moveLeft()
         }
         horizontalMoveState = .moveLeft
-        if verticalMoveState == .onGround{
-            run(SKAction.repeatForever(SKAction.animate(with: moveLeftTextures, timePerFrame: 0.035)))
-        }
-        physicsBody?.velocity = horizontalVelocity * (-1.0)
+//        if verticalMoveState == .onGround{
+//            run(SKAction.repeatForever(SKAction.animate(with: moveLeftTextures, timePerFrame: 0.035)))
+//        }
+//        physicsBody?.velocity = horizontalVelocity * (-1.0)
+        position = CGPoint(x: position.x - horizontalVelocity,
+                           y: position.y)
     }
     
     func startJump(){
@@ -149,7 +137,7 @@ class GameUnit: SKSpriteNode{
         run(SKAction.sequence([jumpUpAction,
                                SKAction.wait(forDuration: 0.03),
                                fallAction]))
-            self.physicsBody?.velocity = self.verticalVelocity
+//            self.physicsBody?.velocity = self.verticalVelocity
         
     }
 //    func startFall(){
@@ -184,17 +172,14 @@ class GameUnit: SKSpriteNode{
     func acceptCompenstionVelosity(compenstionVelocity: CGVector){
 //        let vel = compenstionVelocity * (-1)
 //        physicsBody?.velocity += vel
-        if horizontalMoveState == .moveLeft{
-            physicsBody?.velocity = horizontalVelocity * (-1)
-        } else if horizontalMoveState == .moveRight{
-            physicsBody?.velocity = horizontalVelocity
-        }
+//        if horizontalMoveState == .moveLeft{
+//            physicsBody?.velocity = horizontalVelocity * (-1)
+//        } else if horizontalMoveState == .moveRight{
+//            physicsBody?.velocity = horizontalVelocity
+//        }
 //        print("new velocity = \(physicsBody?.velocity)")
     }
-    
-//    func stopHorizontalMoving(){
-//        physicsBody?.velocity.dx = 0
-//    }
+
 }
 
 
