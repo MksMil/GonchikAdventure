@@ -29,7 +29,6 @@ class LevelScene: RootScene{
     // delta between lastUpdate
     var dt: TimeInterval = 0
     
-    
     var sceneState: LevelScneState = .playing
     
     var bgNode: DungeonBackgroundNode = DungeonBackgroundNode()
@@ -42,24 +41,21 @@ class LevelScene: RootScene{
     var cameraScaleFactor: CGFloat = 1
     var cameraSize: CGSize = .zero
 
-// MARK: - Init
-        convenience init?(fileNamed: String) {
-            guard let scene = SKScene(fileNamed: fileNamed) else { return nil }     
-            self.init(size: scene.size)
-            scene.children.forEach({
-                $0.removeFromParent()
-                print($0)
-                addChild($0)
-            })
-            
-            
-        }
-        override init(size: CGSize) {
-            super.init(size: size)
-        }
-        required init?(coder aDecoder: NSCoder) {
-            super.init(coder: aDecoder)
-        }
+//// MARK: - Init
+//        convenience init?(fileNamed: String) {
+//            guard let scene = SKScene(fileNamed: fileNamed) else { return nil }     
+//            self.init(size: scene.size)
+//            scene.children.forEach({
+//                $0.removeFromParent()
+//                addChild($0)
+//            })
+//        }
+//        override init(size: CGSize) {
+//            super.init(size: size)
+//        }
+//        required init?(coder aDecoder: NSCoder) {
+//            super.init(coder: aDecoder)
+//        }
     // MARK: - didMove
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = physicDelegate
@@ -70,45 +66,23 @@ class LevelScene: RootScene{
             makeLevelFromMap(mapNode)
             mapNode.removeFromParent()
         }
-        setupCamera()
-        addBG()
-        addMainHero()
+        view.isMultipleTouchEnabled = true
+        print("multiple touch: \(view.isMultipleTouchEnabled)")
+        setup()
     }
 
     // MARK: - Methods
-    //camera & hud
-    func setupCamera(){
-        let cameraNode = SKCameraNode()
-        cameraNode.setScale(cameraSize.width / size.width)
-        cameraNode.name = NodeNames.camera.name
-        
-        addChild(cameraNode)
-        camera = cameraNode
-        
-        cameraNode.position = CGPoint(x: size.width / 2,
-                                      y: size.height / 2)
-        makeCameraConstraints()
-    }
     
-    func makeCameraConstraints(){
-        if let camera {
-            camera.constraints = [
-                SKConstraint.positionX(SKRange(lowerLimit: size.width  / 2, upperLimit: bgNode.bounds.size.width - size.width / 2),
-                                       y: SKRange(lowerLimit: size.height / 2, upperLimit: bgNode.bounds.height - size.height / 2))
-            ]
-        }
-    }
-    
-    func addBG(){
-        if let camera = camera{
-            bgNode.setup(withSize: cameraSize,fullSize: size)
-            bgNode.position = CGPoint(x: camera.position.x, y: camera.position.y)
-            addChild(bgNode)
-        }
-    }
-    
+//    func makeCameraConstraints(){
+//        if let camera {
+//            camera.constraints = [
+//                SKConstraint.positionX(SKRange(lowerLimit: size.width  / 2, upperLimit: bgNode.bounds.size.width - size.width / 2),
+//                                       y: SKRange(lowerLimit: size.height / 2, upperLimit: bgNode.bounds.height - size.height / 2))
+//            ]
+//        }
+//    }
+ 
     func makeLevelFromMap(_ map: SKTileMapNode){
-//        var bodies: [SKPhysicsBody?] = []
         for row in 0..<map.numberOfRows {
             for column in 0..<map.numberOfColumns{
                 if let def =  map.tileDefinition(atColumn: column, row: row){
@@ -117,8 +91,6 @@ class LevelScene: RootScene{
                     
                     let tileNode = ObstacleNode()
                     tileNode.setup(texture: texture, size: map.tileSize)
-//                    bodies.append(tileNode.physicsBody)
-//                    tileNode.physicsBody = nil
                     tileNode.position = CGPoint(x: CGFloat(column) * tileNode.size.width /*- size.width / 2*/ + tileNode.size.width / 2,
                                                 y: CGFloat(row) * tileNode.size.height /*- size.height / 2*/ + tileNode.size.height / 2)
                     addChild(tileNode)
@@ -127,22 +99,34 @@ class LevelScene: RootScene{
         }
     }
     
-    func addMainHero(){
-        if let cameraNode = camera{
-            let pControlComponent = PlayerControlComponent()
-            
-            let entity = unit.makeEntity()
-            pControlComponent.setup(camera: cameraNode,
-                                    size: cameraSize,
-                                    unit: unit,
-                                    scene: self)
-            entity.addComponent(pControlComponent)
-            entities.append(entity)
-            unit.node.zPosition = 20
-            unit.node.position = CGPoint(x: size.width / 2,
-                                         y: size.height / 2)
-            addChild(unit.node)
-        }
+    func setup(){
+        let cameraNode = SKCameraNode()
+        cameraNode.setScale(cameraSize.width / size.width)
+        cameraNode.name = NodeNames.camera.name
+        cameraNode.position = CGPoint(x: size.width / 2,
+                                      y: size.height / 2)
+//        makeCameraConstraints()
+        
+        addChild(cameraNode)
+        camera = cameraNode
+        
+        bgNode.setup(withSize: cameraSize,fullSize: size)
+        bgNode.position = CGPoint(x: cameraNode.frame.width / 2,
+                                  y: cameraNode.frame.height / 2)
+        cameraNode.addChild(bgNode)
+        let pControlComponent = PlayerControlComponent(camera: cameraNode,
+                                                       size: cameraSize,
+                                                       unit: unit,
+                                                       scene: self)
+        let entity = unit.makeEntity()
+        entity.addComponent(pControlComponent)
+        entities.append(entity)
+        
+        unit.node.zPosition = 20
+        unit.node.position = CGPoint(x: size.width / 2,
+                                     y: size.height / 2)
+        addChild(unit.node)
+        
     }
     
     // MARK: - Update
@@ -157,7 +141,9 @@ class LevelScene: RootScene{
         
         if dt > 0.01{
 //            print("scene update")
-            bgNode.updateBG(pos: unit.node.position)
+            if let position =  camera?.position{
+                bgNode.updateBG(pos: position)
+            }
             
             for entity in entities {
                 entity.update(deltaTime: dt)

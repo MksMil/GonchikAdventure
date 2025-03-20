@@ -1,15 +1,14 @@
 //
-//  UnitHRightVidleState.swift
+//  UnitFallState.swift
 //  GonchikAdventure
 //
-//  Created by Миляев Максим on 19.03.2025.
+//  Created by Миляев Максим on 20.03.2025.
 //
 
 import GameplayKit
 import SpriteKit
 
-class UnitHRightVIdleState: GKState{
-    
+class UnitFallState: GKState{
     var unit: UnitModel
     
     init(unit: UnitModel) {
@@ -17,8 +16,7 @@ class UnitHRightVIdleState: GKState{
     }
     
     override func didEnter(from previousState: GKState?) {
-        unit.hState = .moveRight
-        unit.vState = .onGround
+        unit.vState = .fall
     }
     
     override func willExit(to nextState: GKState) {}

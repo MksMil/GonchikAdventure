@@ -86,12 +86,12 @@ class TouchInputControlNode: SKSpriteNode{
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
+            print("touch detected")
             let location = t.location(in: parent!)
             for button in [leftButtonNode,rightButtonNode,aButtonNode,bButtonNode]{
                 if button.contains(location) && !pressedButtons.contains(button){
                     pressedButtons.insert(button)
                     //send instructions to delegate
-                    
                     inputDelegate?.executeInstruction(input: NodeNames(rawValue: button.name ?? "") ?? NodeNames.empty, state: InputState.pressed)
                 }
                 
@@ -139,7 +139,7 @@ class TouchInputControlNode: SKSpriteNode{
         for t in touches {
             let location = t.location(in: parent!)
             for button in [leftButtonNode,rightButtonNode,aButtonNode,bButtonNode]{
-                if button.contains(location) || pressedButtons.contains(button){
+                if button.contains(location) && pressedButtons.contains(button){
                     pressedButtons.remove(button)
                     //send instructions to delegate
                     inputDelegate?.executeInstruction(input: NodeNames(rawValue: button.name ?? "") ?? NodeNames.empty, state: InputState.unnpressed)

@@ -9,6 +9,7 @@ final class MainRouter: ObservableObject, MainViewDelegateProtocol{
     // MARK: - Init
     init() {
         self.activeScene = loadScene(name: "TestScene")
+        
     }
     
 //initial load

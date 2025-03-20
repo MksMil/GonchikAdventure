@@ -22,11 +22,15 @@ class UnitModel {
     var hState: UnitHState       = .idle
     var vState: UnitVState       = .onGround
     
-    var horizontalSpeed: CGFloat = 2
-    var verticalSpeed: CGFloat = 0.0
     
-    var vAccelerate: CGFloat = 0.0
+    var horizontalSpeed: CGFloat = 2
+    var verticalSpeed: CGFloat = 450.0
+    
+    var vAccelerate: CGFloat = 0.1
     var vDecelerate: CGFloat = 0.0
+    
+    var gAccelerate: CGFloat = 0.2
+    var gDecelerate: CGFloat = 0.5
     
     var stateMachine: GKStateMachine?
     
@@ -35,7 +39,8 @@ class UnitModel {
         let hLeftVIdleState = UnitHLeftVIdleState(unit: self)
         let hRightVIdleState = UnitHRightVIdleState(unit: self)
         let unitJumpState = UnitJumpState(unit: self)
-        stateMachine = GKStateMachine(states: [hIdleVIdleState,hLeftVIdleState,hRightVIdleState, unitJumpState])
+        let unitFallState = UnitFallState(unit: self)
+        stateMachine = GKStateMachine(states: [hIdleVIdleState,hLeftVIdleState,hRightVIdleState, unitJumpState,unitFallState])
         stateMachine?.enter(UnitHIdleVIdlelState.self)
     }
     
@@ -45,17 +50,18 @@ class UnitModel {
         node = SKSpriteNode(texture: texture, size: size)
         setupPhysicsTo(node: node)
         //add Components?
-        let horizontalMoveComponent =  HorizontalMoveComponent(node: node,
-                                                               unit: self)
+//        let horizontalMoveComponent =  HorizontalMoveComponent(node: node,
+//                                                               unit: self)
         let vComponent = VisualComponent(unit: self,
                                          node: node)
         let directionComponent = DirectionComponent(node: node,
                                                     unit: self)
-        let jumpComponent = JumpComponent(node: node,
+        let movementComponent = MovementComponent(node: node,
                                           unit: self)
         entity.addComponent(vComponent)
-        entity.addComponent(horizontalMoveComponent)
+//        entity.addComponent(horizontalMoveComponent)
         entity.addComponent(directionComponent)
+        entity.addComponent(movementComponent)
         setupStateMachine()
      
         return entity

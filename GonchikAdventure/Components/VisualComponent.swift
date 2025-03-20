@@ -47,10 +47,18 @@ class VisualComponent: GKComponent {
         switch unit.vState {
             case .jump:
                 //change texture to jump
-                node.run(SKAction.repeatForever(SKAction.animate(with: TextureBank.hero_jumpUpTextures, timePerFrame: 0.1)))
+                let name = "jump"
+                if node.action(forKey: name) == nil{
+                    node.removeAllActions()
+                    node.run(SKAction.repeatForever(SKAction.animate(with: TextureBank.hero_jumpUpTextures, timePerFrame: 0.1)),withKey: name)
+                }
             case .fall:
                 //change texture to fall
-                node.run(SKAction.repeatForever(SKAction.animate(with: TextureBank.hero_jumpDownTextures, timePerFrame: 0.1)),withKey: "fall")
+                let name = "fall"
+                if node.action(forKey: name) == nil{
+                    node.removeAllActions()
+                    node.run(SKAction.repeatForever(SKAction.animate(with: TextureBank.hero_jumpDownTextures, timePerFrame: 0.1)),withKey: "fall")
+                }
             case .onGround:
                 //change texture to lef/right/idle
                 switch unit.hState {
@@ -59,14 +67,14 @@ class VisualComponent: GKComponent {
                         if node.action(forKey: name) == nil{
                             node.removeAllActions()
                             //move left animation
-                            node.run(SKAction.repeatForever(SKAction.animate(with: TextureBank.hero_moveLeftTextures, timePerFrame: 0.1)),withKey: name)
+                            node.run(SKAction.repeatForever(SKAction.animate(with: TextureBank.hero_moveLeftTextures, timePerFrame: 0.035)),withKey: name)
                         }
                     case .moveRight:
                         //moveright animation
                         let name = "moveRight"
                         if node.action(forKey: name) == nil {
                             node.removeAllActions()
-                            node.run(SKAction.repeatForever(SKAction.animate(with: TextureBank.hero_moveLeftTextures, timePerFrame: 0.1)), withKey: name)
+                            node.run(SKAction.repeatForever(SKAction.animate(with: TextureBank.hero_moveLeftTextures, timePerFrame: 0.035)), withKey: name)
                         }
                     case .idle:
                         //idle animation
