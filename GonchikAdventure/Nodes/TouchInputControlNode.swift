@@ -39,8 +39,8 @@ class TouchInputControlNode: SKSpriteNode{
                                           height: size.width * buttonSize),
                              position: CGPoint(x: -size.width * 3.7 * scaleFactor,
                                                y: -size.height * 3.5 * scaleFactor))
-        leftButtonNode.changeState()
         leftButtonNode.name = NodeNames.buttonLeft.name
+        leftButtonNode.changeState()
         
         
         //right button
@@ -86,7 +86,6 @@ class TouchInputControlNode: SKSpriteNode{
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches {
-            print("touch detected")
             let location = t.location(in: parent!)
             for button in [leftButtonNode,rightButtonNode,aButtonNode,bButtonNode]{
                 if button.contains(location) && !pressedButtons.contains(button){
@@ -141,14 +140,15 @@ class TouchInputControlNode: SKSpriteNode{
             for button in [leftButtonNode,rightButtonNode,aButtonNode,bButtonNode]{
                 if button.contains(location) && pressedButtons.contains(button){
                     pressedButtons.remove(button)
+                    button.changeStatePressed(false)
                     //send instructions to delegate
                     inputDelegate?.executeInstruction(input: NodeNames(rawValue: button.name ?? "") ?? NodeNames.empty, state: InputState.unnpressed)
                 }
-                if pressedButtons.contains(button){
-                    button.changeStatePressed(true)
-                } else {
-                    button.changeStatePressed(false)
-                }
+//                if pressedButtons.contains(button){
+//                    button.changeStatePressed(true)
+//                } else {
+//                    button.changeStatePressed(false)
+//                }
             }
         }
     }

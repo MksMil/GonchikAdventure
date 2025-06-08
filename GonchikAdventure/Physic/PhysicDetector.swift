@@ -7,13 +7,16 @@ class PhysicDetector: NSObject, SKPhysicsContactDelegate{
         // dy == -1: up,
         // dx ==  1: left,
         // dx == -1: right
-//        let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-//        let normal = contact.contactNormal
+        let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        let normal = contact.contactNormal
         
 //        if contact.bodyA.categoryBitMask == PhysicsCategory.Player || contact.bodyB.categoryBitMask == PhysicsCategory.Player{
 //            let contactBody = contact.bodyA.categoryBitMask == PhysicsCategory.Player ? contact.bodyB:contact.bodyA
 //        }
-        
+        if collision == PhysicsCategory.Player | PhysicsCategory.Obstacle {
+            print("did end, normal: \(normal), \(contact.bodyA.node?.name), \(contact.bodyB.node?.name)")
+            
+        }
 //        if normal.dy > 0, mainHeroNode.verticalMoveState != .onGround{
 ////            print("begin coll")
 //            mainHeroNode.verticalMoveState = .onGround
@@ -31,13 +34,16 @@ class PhysicDetector: NSObject, SKPhysicsContactDelegate{
     
     func didEnd(_ contact: SKPhysicsContact) {
         let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-//        let normal = contact.contactNormal
+        let normal = contact.contactNormal
+        let impulse = contact.collisionImpulse
        
         if collision == PhysicsCategory.Player | PhysicsCategory.Obstacle {
-//            print("end coll, normal: \(normal), \(contact.bodyA.node?.name), \(contact.bodyB.node?.name)")
-//            if normal.dy < 0 {
-//                mainHeroNode.fall()
-//            }
+            print("did end, normal: \(normal), \(contact.bodyA.node?.name), \(contact.bodyB.node?.name)")
+            if let name = contact.bodyA.node?.name, name == NodeNames.bg.rawValue {
+                if let unit = (contact.bodyB.node as? GameUnit), let vDy = unit.physicsBody?.velocity.dy, vDy < 0{
+                    unit.parentUnit?.changeSteteTo(UnitFallState.self)
+                }
+            }
         }
     }
 }

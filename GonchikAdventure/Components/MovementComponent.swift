@@ -24,36 +24,31 @@ class MovementComponent: GKComponent{
 
     override func update(deltaTime seconds: TimeInterval) {
         super.update(deltaTime: seconds) //?
-            var dx: CGFloat = .zero
-            switch unit.hState {
-                case .moveLeft:
-                    dx = -unit.horizontalSpeed
-                case .moveRight:
-                    dx = unit.horizontalSpeed
-                case .idle:
-                    dx = 0
-            }
-        if unit.vState == .jump{
-            if let velDy = node.physicsBody?.velocity.dy, velDy < 0{
-                unit.stateMachine?.enter(UnitFallState.self)
-            } else {
-                
-            }
-            
-        }
-        else if unit.vState == .fall{
-            if node.physicsBody?.velocity.dy == 0{
-                switch unit.hState {
-                    case .idle:
-                        unit.stateMachine?.enter(UnitHIdleVIdlelState.self)
-                    case .moveLeft:
-                        unit.stateMachine?.enter(UnitHLeftVIdleState.self)
-                    case .moveRight:
-                        unit.stateMachine?.enter(UnitHRightVIdleState.self)
-                }
-            }
+        var dx: CGFloat = .zero
+        switch unit.hState {
+            case .moveLeft:
+                dx = -unit.horizontalSpeed
+            case .moveRight:
+                dx = unit.horizontalSpeed
+            case .idle:
+                dx = 0
         }
         node.position.x =  node.position.x + dx
+
+        if let velDy = node.physicsBody?.velocity.dy{
+            if unit.vState == .jump, velDy < 0{
+                unit.stateMachine?.enter(UnitFallState.self)
+            } else if unit.vState == .fall, velDy == 0{
+                    switch unit.hState {
+                        case .idle:
+                            unit.stateMachine?.enter(UnitIdlelState.self)
+                        case .moveLeft:
+                            unit.stateMachine?.enter(UnitMoveLeftState.self)
+                        case .moveRight:
+                            unit.stateMachine?.enter(UnitMoveRightState.self)
+                    }
+            }
+        }
   
     }
     
@@ -69,6 +64,4 @@ class MovementComponent: GKComponent{
         node.xScale = xScale * (unit.direction == .left ? 1: -1)
         node.yScale = yScale
     }
-    
-    
 }

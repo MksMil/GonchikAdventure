@@ -15,7 +15,7 @@ class PlayerControlComponent: GKComponent{
     var camera: SKCameraNode
     var cameraSize: CGSize
     var offset: CGFloat {
-        unit.size.width / 2 + cameraSize.width / 4
+        unit.size.width / 2 + cameraSize.width / 8
     }
     
     init(camera: SKCameraNode,
@@ -63,8 +63,8 @@ class PlayerControlComponent: GKComponent{
                 case .right:
                     camera.position.x = approach(start: camera.position.x, end: unit.node.position.x + offset, shift: 8)
             }
-        if unit.vState == .onGround{
-            camera.position.y = approach(start: camera.position.y, end: unit.node.position.y + 50, shift: 4) 
+        if unit.vState != .jump{
+            camera.position.y = approach(start: camera.position.y, end: unit.node.position.y + 50, shift: 4)
         }
     }
 }
@@ -81,27 +81,32 @@ extension PlayerControlComponent: ControlInputDelegate{
             case .buttonLeft:
                 if state == .pressed {
 //                    unit?.moveLeft()
-                    unit.stateMachine?.enter(UnitHLeftVIdleState.self)
+                    unit.stateMachine?.enter(UnitMoveLeftState.self)
                 } else {
 //                    unit?.stopMoving()
-                    unit.stateMachine?.enter(UnitHIdleVIdlelState.self)
+                    unit.stateMachine?.enter(UnitIdlelState.self)
                 }
+//                print("left pressed unit hState: \(unit.hState), vState: \(unit.vState)")
             case .buttonRight:
                 if state == .pressed {
 //                    unit?.moveRight()
-                    unit.stateMachine?.enter(UnitHRightVIdleState.self)
+                    unit.stateMachine?.enter(UnitMoveRightState.self)
                 } else {
 //                    unit?.stopMoving()
-                    unit.stateMachine?.enter(UnitHIdleVIdlelState.self)
+                    unit.stateMachine?.enter(UnitIdlelState.self)
                 }
+//                print("right pressed unit hState: \(unit.hState), vState: \(unit.vState)")
 //            case .buttonUp:
 //                <#code#>
 //            case .buttonDown:
 //                <#code#>
             case .buttonA:
-                if unit.vState == .onGround{
+//                print("A pressed unit hState: \(unit.hState), vState: \(unit.vState)")
+                if unit.vState == .onGround,
+                   state == .pressed{
                     unit.stateMachine?.enter(UnitJumpState.self)
                 }
+                
             case .buttonB:
                 print("B pressed")
 //            case .buttonPauseResume:

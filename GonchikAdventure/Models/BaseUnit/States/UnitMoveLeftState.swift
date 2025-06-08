@@ -6,7 +6,7 @@
 import GameplayKit
 import SpriteKit
 
-class UnitHLeftVIdleState: GKState{
+class UnitMoveLeftState: GKState{
     
     var unit: UnitModel
     
@@ -15,8 +15,12 @@ class UnitHLeftVIdleState: GKState{
     }
     
     override func didEnter(from previousState: GKState?) {
+        unit.direction = .left
+        if previousState is UnitFallState{
+            unit.vState = .onGround
+        }
         unit.hState = .moveLeft
-        unit.vState = .onGround
+        
     }
     
     override func willExit(to nextState: GKState) {}

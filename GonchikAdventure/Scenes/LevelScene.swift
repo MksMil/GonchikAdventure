@@ -1,24 +1,16 @@
-//
-//  LevelScene.swift
-//  GonchikAdventure
-//
-//  Created by Миляев Максим on 10.03.2025.
-//
-
 import SwiftUI
 import SpriteKit
 import GameplayKit
 
 class LevelScene: RootScene{
+    enum LevelScneState {
+        case paused, playing
+    }
 
     var entities = [GKEntity]()
     var graphs = [String : GKGraph]()
     
     let physicDelegate = PhysicDetector()
-        
-    enum LevelScneState {
-        case paused, playing
-    }
     
     //for test
     var unit = UnitModel()
@@ -83,6 +75,7 @@ class LevelScene: RootScene{
 //    }
  
     func makeLevelFromMap(_ map: SKTileMapNode){
+        
         for row in 0..<map.numberOfRows {
             for column in 0..<map.numberOfColumns{
                 if let def =  map.tileDefinition(atColumn: column, row: row){
@@ -144,12 +137,10 @@ class LevelScene: RootScene{
             if let position =  camera?.position{
                 bgNode.updateBG(pos: position)
             }
-            
             for entity in entities {
                 entity.update(deltaTime: dt)
             }
         }
-
     }
 }
 
