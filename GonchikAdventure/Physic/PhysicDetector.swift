@@ -14,7 +14,7 @@ class PhysicDetector: NSObject, SKPhysicsContactDelegate{
 //            let contactBody = contact.bodyA.categoryBitMask == PhysicsCategory.Player ? contact.bodyB:contact.bodyA
 //        }
         if collision == PhysicsCategory.Player | PhysicsCategory.Obstacle {
-            print("did end, normal: \(normal), \(contact.bodyA.node?.name), \(contact.bodyB.node?.name)")
+            print("did begin, normal: \(normal), \(contact.bodyA.node?.name), \(contact.bodyB.node?.name)")
             
         }
 //        if normal.dy > 0, mainHeroNode.verticalMoveState != .onGround{

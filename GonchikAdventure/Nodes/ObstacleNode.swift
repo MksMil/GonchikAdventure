@@ -7,12 +7,14 @@ import SpriteKit
 
 class ObstacleNode: SKSpriteNode{
     
-    func setup(texture: SKTexture, size: CGSize){
+    func setup(size: CGSize, def: SKTileDefinition){
+        let tileTexturesArray = def.textures
+        let texture = tileTexturesArray[0]
         self.texture = texture
         self.size = size
-        setupPhysics(texture: texture)
         self.name = NodeNames.bg.rawValue
         zPosition = 20
+        setupPhysics(texture: texture)
     }
     
     func setupPhysics(texture: SKTexture){
@@ -31,6 +33,7 @@ class ObstacleNode: SKSpriteNode{
         physicsBody?.density = 100 //плотность
         physicsBody?.isDynamic = false
 //        physicsBody?.isResting = true
+            
         physicsBody?.friction = 1 //сопротивление
         physicsBody?.affectedByGravity = false
         physicsBody?.linearDamping = 0 //затухание линейной скорости

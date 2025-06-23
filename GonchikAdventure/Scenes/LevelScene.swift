@@ -54,7 +54,10 @@ class LevelScene: RootScene{
         physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
         
         cameraSize = view.frame.size
-        if let mapNode = childNode(withName: "Tile Map Node") as? SKTileMapNode {
+        if let edgeNode = childNode(withName: "Edge Node") as? SKTileMapNode {
+            makeEdgeFromMap(edgeNode)
+        }
+        if let mapNode = childNode(withName: "Obstacles Map Node") as? SKTileMapNode {
             makeLevelFromMap(mapNode)
             mapNode.removeFromParent()
         }
@@ -63,6 +66,39 @@ class LevelScene: RootScene{
         setup()
     }
 
+    func makeEdgeFromMap(_ map: SKTileMapNode){
+        var bodies: [SKPhysicsBody] = []
+        var nodes: [ObstacleNode] = []
+        for row in 0..<map.numberOfRows{
+            for column in 0..<map.numberOfColumns{
+                if let def =  map.tileDefinition(atColumn: column, row: row){
+                    let tileNode = ObstacleNode()
+                    tileNode.setup(size: map.tileSize, def: def)
+                    tileNode.position = CGPoint(x: CGFloat(column) * tileNode.size.width /*- size.width / 2*/ + tileNode.size.width / 2,
+                                                y: CGFloat(row) * tileNode.size.height /*- size.height / 2*/ + tileNode.size.height / 2)
+                    nodes.append(tileNode)
+                }
+            }
+        }
+        nodes.map{
+            if let body = $0.physicsBody{
+                
+            bodies.append(body)
+        }
+            $0.physicsBody = nil
+        }
+        let newBody = SKPhysicsBody(bodies: bodies)
+        let newNode = SKNode()
+        newNode.position = map.position
+        print("position: \(map.position)")
+        newNode.zPosition = 20
+        newBody.isDynamic = false
+        newNode.physicsBody = newBody
+        print("info")
+        print("New node physicsBody: \(newNode.physicsBody?.description ?? "nil")")
+        nodes.map{addChild($0)}
+        addChild(newNode)
+    }
     // MARK: - Methods
     
 //    func makeCameraConstraints(){
@@ -74,22 +110,26 @@ class LevelScene: RootScene{
 //        }
 //    }
  
+//    func makeLevelFromMap(_ map: SKTileMapNode) {
+//        // Создаём физическое тело как границу всей карты
+
+//    }
+    
     func makeLevelFromMap(_ map: SKTileMapNode){
         
         for row in 0..<map.numberOfRows {
             for column in 0..<map.numberOfColumns{
                 if let def =  map.tileDefinition(atColumn: column, row: row){
-                    let tileTexturesArray = def.textures
-                    let texture = tileTexturesArray[0]
-                    
                     let tileNode = ObstacleNode()
-                    tileNode.setup(texture: texture, size: map.tileSize)
+                    tileNode.setup(size: map.tileSize, def: def)
                     tileNode.position = CGPoint(x: CGFloat(column) * tileNode.size.width /*- size.width / 2*/ + tileNode.size.width / 2,
                                                 y: CGFloat(row) * tileNode.size.height /*- size.height / 2*/ + tileNode.size.height / 2)
                     addChild(tileNode)
+
                 }
             }
         }
+        
     }
     
     func setup(){
