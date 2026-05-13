@@ -1,5 +1,5 @@
 # Gonchik Anventure
-Simple platformer engine with paralax background
+Simple platformer engine with paralax  for iOS devices
 Used SpriteKit
 
 
